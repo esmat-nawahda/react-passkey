@@ -5,8 +5,8 @@ import {
   PasskeyButton,
   PasskeyManager,
   PasskeyStatus,
-} from '@react-passkey/core';
-import type { PasskeyCredential } from '@react-passkey/core';
+} from '@esmatnawahda/react-passkey';
+import type { PasskeyCredential } from '@esmatnawahda/react-passkey';
 import './App.css';
 
 function PasskeyDemo() {
@@ -66,32 +66,38 @@ function PasskeyDemo() {
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
       <h1>React Passkey Library Demo</h1>
 
-      <div style={{ marginBottom: '2rem', padding: '1rem', background: '#f0f0f0', borderRadius: '8px' }}>
+      <div className="demo-card status-card">
         <h2>Status</h2>
         <PasskeyStatus />
         {!isSupported && (
-          <div style={{ marginTop: '1rem', color: 'red' }}>
+          <div style={{ marginTop: '1rem', color: '#f87171' }}>
             ⚠️ Passkeys are not supported in this browser. Please use Chrome, Safari, or Edge on a device with biometric authentication.
           </div>
         )}
         {lastAuthenticatedUser && (
-          <div style={{ marginTop: '1rem', color: 'green' }}>
+          <div style={{ marginTop: '1rem', color: '#4ade80' }}>
             Last authenticated as: <strong>{lastAuthenticatedUser}</strong>
           </div>
         )}
       </div>
 
-      <div style={{ marginBottom: '2rem', padding: '1rem', background: '#e8f4fd', borderRadius: '8px' }}>
+      <div className="demo-card demo-card-light">
         <h2>How to Use</h2>
-        <ol style={{ textAlign: 'left', marginLeft: '1rem' }}>
+        <ol style={{ marginLeft: '1rem' }}>
           <li>First, register a new passkey by entering your email and name below</li>
           <li>Your device will prompt you to use biometric authentication (Touch ID, Face ID, etc.)</li>
           <li>After registration, you can sign in using the "Sign In with Passkey" button</li>
           <li>Manage your registered passkeys in the section below</li>
         </ol>
+        <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#2a2a2a', borderRadius: '8px' }}>
+          <p style={{ margin: 0, fontSize: '0.9rem', color: '#d0d0d0' }}>
+            <strong>Note:</strong> This demo requires HTTPS to work properly. Passkeys only function over secure connections.
+            The GitHub Pages deployment automatically provides HTTPS.
+          </p>
+        </div>
       </div>
 
-      <div style={{ marginBottom: '2rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
+      <div className="demo-card">
         <h2>Step 1: Register New Passkey</h2>
         <div style={{ marginBottom: '1rem' }}>
           <label htmlFor="email">Email</label>
@@ -132,7 +138,7 @@ function PasskeyDemo() {
         </PasskeyButton>
       </div>
 
-      <div style={{ marginBottom: '2rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
+      <div className="demo-card">
         <h2>Step 2: Authenticate</h2>
         <p style={{ marginBottom: '1rem', textAlign: 'left' }}>
           {credentials.length === 0 
@@ -157,19 +163,13 @@ function PasskeyDemo() {
       </div>
 
       {message && (
-        <div style={{
-          padding: '1rem',
-          marginBottom: '2rem',
-          background: message.type === 'success' ? '#d4edda' : message.type === 'error' ? '#f8d7da' : '#cce5ff',
-          color: message.type === 'success' ? '#155724' : message.type === 'error' ? '#721c24' : '#004085',
-          borderRadius: '8px',
-          border: `1px solid ${message.type === 'success' ? '#c3e6cb' : message.type === 'error' ? '#f5c6cb' : '#b8daff'}`
-        }}>
+        <div className={`demo-card ${message.type === 'success' ? 'success-message' : message.type === 'error' ? 'error-message' : 'info-message'}`}
+             style={{ padding: '1rem', marginBottom: '2rem' }}>
           {message.text}
         </div>
       )}
 
-      <div style={{ marginBottom: '2rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
+      <div className="demo-card">
         <h2>Step 3: Manage Your Passkeys ({credentials.length})</h2>
         <PasskeyManager 
           emptyMessage="No passkeys registered yet. Register one above to get started!"
@@ -178,9 +178,9 @@ function PasskeyDemo() {
             <div style={{
               padding: '1rem',
               marginBottom: '1rem',
-              background: '#fff',
+              background: '#0a0a0a',
               borderRadius: '8px',
-              border: '1px solid #ddd'
+              border: '1px solid #2a2a2a'
             }}>
               <h4 style={{ margin: '0 0 0.5rem 0' }}>{credential.userId}</h4>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
@@ -198,10 +198,9 @@ function PasskeyDemo() {
               </div>
               <button
                 onClick={onDelete}
+                className="delete-button"
                 style={{
                   marginTop: '0.5rem',
-                  background: '#dc3545',
-                  color: 'white',
                   border: 'none',
                   padding: '0.5rem 1rem',
                   borderRadius: '4px',
@@ -215,18 +214,16 @@ function PasskeyDemo() {
         />
       </div>
 
-      <div style={{ marginTop: '3rem', padding: '1rem', background: '#f0f0f0', borderRadius: '8px' }}>
+      <div className="demo-card demo-card-light" style={{ marginTop: '3rem' }}>
         <h3>Integration Example</h3>
         <pre style={{ 
           textAlign: 'left', 
-          background: '#2d2d2d', 
-          color: '#fff', 
           padding: '1rem', 
-          borderRadius: '4px',
+          borderRadius: '8px',
           overflow: 'auto',
           fontSize: '0.9rem'
         }}>
-{`import { PasskeyProvider, PasskeyButton } from '@react-passkey/core';
+{`import { PasskeyProvider, PasskeyButton } from '@esmatnawahda/react-passkey';
 
 function App() {
   const handleSuccess = (result) => {

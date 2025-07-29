@@ -1,7 +1,7 @@
 {
-  "name": "@react-passkey/core",
+  "name": "@esmatnawahda/react-passkey",
   "version": "0.1.0",
-  "description": "A React library for WebAuthn passkey authentication wrapping ox library",
+  "description": "A comprehensive React library for WebAuthn passkey authentication with TypeScript support",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -16,18 +16,30 @@
     "test:coverage": "jest --coverage",
     "lint": "eslint . --ext .ts,.tsx",
     "type-check": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "publish": "npm publish --access public"
   },
   "keywords": [
     "react",
     "passkey",
     "webauthn",
     "authentication",
-    "ox",
-    "biometric"
+    "biometric",
+    "typescript",
+    "hooks",
+    "fido2",
+    "security"
   ],
-  "author": "",
+  "author": "esmatnawahda",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/esmatnawahda/react-passkey.git"
+  },
+  "homepage": "https://esmatnawahda.github.io/react-passkey/",
+  "bugs": {
+    "url": "https://github.com/esmatnawahda/react-passkey/issues"
+  },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"

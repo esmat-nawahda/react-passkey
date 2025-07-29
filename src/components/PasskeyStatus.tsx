@@ -20,9 +20,9 @@ export const PasskeyStatus: React.FC<PasskeyStatusProps> = ({
     <div className={className}>
       <div style={{ marginBottom: '0.5rem' }}>
         {isSupported ? (
-          <span style={{ color: 'green' }}>✓ {supportedMessage}</span>
+          <span style={{ color: '#4ade80' }}>✓ {supportedMessage}</span>
         ) : (
-          <span style={{ color: 'red' }}>✗ {unsupportedMessage}</span>
+          <span style={{ color: '#f87171' }}>✗ {unsupportedMessage}</span>
         )}
       </div>
       {showCredentialCount && isSupported && (

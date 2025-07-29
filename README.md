@@ -1,6 +1,10 @@
 # React Passkey Library
 
-A comprehensive React library for WebAuthn passkey authentication, wrapping the ox library with React-specific features and components.
+A comprehensive React library for WebAuthn passkey authentication with TypeScript support and modern React patterns.
+
+## 🚀 Live Demo
+
+Check out the live demo: **[https://esmatnawahda.github.io/react-passkey/](https://esmatnawahda.github.io/react-passkey/)**
 
 ## Features
 
@@ -13,19 +17,20 @@ A comprehensive React library for WebAuthn passkey authentication, wrapping the 
 - 🎨 **Customizable and extensible**
 - ✅ **Fully typed with TypeScript**
 - 🧪 **Comprehensive test coverage**
+- 🚀 **GitHub Pages deployment ready**
 
 ## Installation
 
 ```bash
-npm install @react-passkey/core
+npm install @esmatnawahda/react-passkey
 # or
-yarn add @react-passkey/core
+yarn add @esmatnawahda/react-passkey
 ```
 
 ## Quick Start
 
 ```tsx
-import { PasskeyProvider, PasskeyButton, usePasskey } from '@react-passkey/core';
+import { PasskeyProvider, PasskeyButton, usePasskey } from '@esmatnawahda/react-passkey';
 
 function App() {
   return (
@@ -222,8 +227,35 @@ npm run build
 # Run example app
 cd example
 npm install
-npm start
+npm run dev
 ```
+
+## GitHub Pages Deployment
+
+This library includes automatic GitHub Pages deployment. To set up:
+
+1. **Push to GitHub**: Create a new repository and push your code
+2. **Enable GitHub Pages**: 
+   - Go to repository Settings → Pages
+   - Set source to "GitHub Actions"
+3. **Automatic Deployment**: The workflow will automatically deploy on pushes to main branch
+4. **Access Demo**: Your demo will be available at `https://yourusername.github.io/react-passkey/`
+
+### Manual Deployment
+
+You can also deploy manually:
+
+```bash
+cd example
+npm run build
+npm run deploy  # Requires gh-pages package
+```
+
+## Requirements
+
+- **HTTPS**: Passkeys require secure contexts (HTTPS)
+- **Modern Browser**: Chrome 67+, Firefox 60+, Safari 14+, Edge 18+
+- **Device Security**: Works best with biometric authentication (Touch ID, Face ID, Windows Hello)
 
 ## License
 
