@@ -4,7 +4,7 @@ A comprehensive React library for WebAuthn passkey authentication with TypeScrip
 
 ## 🚀 Live Demo
 
-Check out the live demo: **[https://esmatnawahda.github.io/react-passkey/](https://esmatnawahda.github.io/react-passkey/)**
+Check out the live demo: **[https://esmat-nawahda.github.io/react-passkey/](https://esmat-nawahda.github.io/react-passkey/)**
 
 ## Features
 

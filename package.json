@@ -34,11 +34,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/esmatnawahda/react-passkey.git"
+    "url": "git+https://github.com/esmat-nawahda/react-passkey.git"
   },
-  "homepage": "https://esmatnawahda.github.io/react-passkey/",
+  "homepage": "https://esmat-nawahda.github.io/react-passkey/",
   "bugs": {
-    "url": "https://github.com/esmatnawahda/react-passkey/issues"
+    "url": "https://github.com/esmat-nawahda/react-passkey/issues"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
