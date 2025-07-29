@@ -13,6 +13,8 @@
 
 **Try it now:** **[https://esmat-nawahda.github.io/react-passkey/](https://esmat-nawahda.github.io/react-passkey/)**
 
+> ✅ **Real WebAuthn Demo** - This demo uses authentic WebAuthn APIs with real biometric authentication. Check the browser console and on-screen display for genuine credential data from your device.
+
 ## ✨ Why React Passkey Pro?
 
 ### 🎯 **Zero Configuration**

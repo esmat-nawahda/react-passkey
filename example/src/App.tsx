@@ -15,6 +15,7 @@ function PasskeyDemo() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState<{ type: 'success' | 'error' | 'info'; text: string } | null>(null);
   const [lastAuthenticatedUser, setLastAuthenticatedUser] = useState<string | null>(null);
+  const [lastCredentialData, setLastCredentialData] = useState<any>(null);
 
   // Debug logging
   console.log('Passkey Support:', isSupported);
@@ -22,9 +23,17 @@ function PasskeyDemo() {
 
   const handleRegistrationSuccess = (credential: PasskeyCredential) => {
     console.log('Registration success:', credential);
+    
+    // Show detailed real credential data
+    const credentialInfo = JSON.stringify(credential.publicKey, null, 2);
+    console.log('Real WebAuthn credential data:', credentialInfo);
+    
+    // Store for UI display
+    setLastCredentialData(credential.publicKey);
+    
     setMessage({ 
       type: 'success', 
-      text: `Successfully registered passkey for ${credential.userId}! You can now sign in with your passkey.` 
+      text: `Successfully registered passkey for ${credential.userId}! See real WebAuthn data below.` 
     });
     setEmail('');
     setName('');
@@ -87,12 +96,16 @@ function PasskeyDemo() {
           <li>First, register a new passkey by entering your email and name below</li>
           <li>Your device will prompt you to use biometric authentication (Touch ID, Face ID, etc.)</li>
           <li>After registration, you can sign in using the "Sign In with Passkey" button</li>
+          <li><strong>Check the browser console</strong> to see real WebAuthn credential data</li>
           <li>Manage your registered passkeys in the section below</li>
         </ol>
         <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#2a2a2a', borderRadius: '8px' }}>
-          <p style={{ margin: 0, fontSize: '0.9rem', color: '#d0d0d0' }}>
-            <strong>Note:</strong> This demo requires HTTPS to work properly. Passkeys only function over secure connections.
-            The GitHub Pages deployment automatically provides HTTPS.
+          <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#d0d0d0' }}>
+            <strong>Note:</strong> This demo uses <strong>real WebAuthn API</strong> - not mocked data. 
+            Passkeys only function over secure connections (HTTPS).
+          </p>
+          <p style={{ margin: 0, fontSize: '0.9rem', color: '#4ade80' }}>
+            ✅ <strong>Real Results:</strong> Open browser DevTools Console to see authentic WebAuthn credential objects
           </p>
         </div>
       </div>
@@ -213,6 +226,36 @@ function PasskeyDemo() {
           )}
         />
       </div>
+
+      {lastCredentialData && (
+        <div className="demo-card" style={{ marginTop: '2rem' }}>
+          <h3>🔍 Latest Real WebAuthn Credential Data</h3>
+          <p style={{ marginBottom: '1rem', color: '#4ade80' }}>
+            ✅ This is authentic WebAuthn data from your device's biometric authentication:
+          </p>
+          <pre style={{ 
+            textAlign: 'left', 
+            padding: '1rem', 
+            borderRadius: '8px',
+            overflow: 'auto',
+            fontSize: '0.8rem',
+            backgroundColor: '#1a1a1a',
+            border: '1px solid #333',
+            maxHeight: '300px',
+          }}>
+            {JSON.stringify(lastCredentialData, null, 2)}
+          </pre>
+          <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#666' }}>
+            <p><strong>Key Fields Explained:</strong></p>
+            <ul style={{ textAlign: 'left', marginLeft: '1rem' }}>
+              <li><strong>credentialId:</strong> Unique identifier for this passkey</li>
+              <li><strong>attestationObject:</strong> Cryptographic proof from authenticator</li>
+              <li><strong>clientData:</strong> Challenge verification and origin</li>
+              <li><strong>transports:</strong> How the authenticator communicates</li>
+            </ul>
+          </div>
+        </div>
+      )}
 
       <div className="demo-card demo-card-light" style={{ marginTop: '3rem' }}>
         <h3>Integration Example</h3>

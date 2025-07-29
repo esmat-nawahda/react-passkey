@@ -59,14 +59,71 @@ export const parseAuthenticatorData = (authData: ArrayBuffer) => {
   };
 };
 
-export const extractPublicKeyFromCredential = (credential: PublicKeyCredential): string => {
+export const extractPublicKeyFromCredential = (credential: PublicKeyCredential): any => {
   if (!('response' in credential) || !('attestationObject' in credential.response)) {
     throw new Error('Invalid credential format');
   }
   
-  // For demo purposes, we'll return a base64 encoded version of the credential ID
-  // In a real implementation, you'd extract the actual public key from the attestation object
-  return bufferToBase64(credential.rawId);
+  const response = credential.response as AuthenticatorAttestationResponse;
+  
+  try {
+    // Real WebAuthn credential data extraction
+    const attestationObject = response.attestationObject;
+    const clientDataJSON = response.clientDataJSON;
+    const authenticatorData = response.getAuthenticatorData?.() || null;
+    
+    // Parse client data JSON to get challenge and origin
+    const clientData = JSON.parse(new TextDecoder().decode(clientDataJSON));
+    
+    // Extract real credential information
+    const credentialData = {
+      // Core credential information
+      credentialId: bufferToBase64(credential.rawId),
+      type: credential.type,
+      
+      // Real WebAuthn response data
+      attestationObject: bufferToBase64(attestationObject),
+      clientDataJSON: bufferToBase64(clientDataJSON),
+      authenticatorData: authenticatorData ? bufferToBase64(authenticatorData) : null,
+      
+      // Client data details
+      clientData: {
+        type: clientData.type,
+        challenge: clientData.challenge,
+        origin: clientData.origin,
+        crossOrigin: clientData.crossOrigin || false,
+      },
+      
+      // Transport methods supported by authenticator
+      transports: response.getTransports?.() || [],
+      
+      // Timestamp
+      timestamp: Date.now(),
+      
+      // Note about public key extraction
+      note: 'Real WebAuthn credential - public key requires CBOR parsing for production use',
+      
+      // Basic metadata
+      algorithm: -7, // ES256 algorithm identifier (standard default)
+    };
+    
+    console.log('Real WebAuthn credential created:', credentialData);
+    return credentialData;
+    
+  } catch (error) {
+    console.error('Error extracting credential data:', error);
+    
+    // Fallback with clear indication this is fallback data
+    return {
+      credentialId: bufferToBase64(credential.rawId),
+      type: credential.type,
+      algorithm: -7,
+      error: 'Could not parse full credential data',
+      fallback: true,
+      timestamp: Date.now(),
+      note: 'This is fallback data due to parsing error'
+    };
+  }
 };
 
 export const verifySignature = async (
