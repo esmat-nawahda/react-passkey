@@ -4,9 +4,19 @@ export interface PasskeyUser {
   displayName: string;
 }
 
+export interface PasskeyP256PublicKey {
+  kty: number;
+  alg: number;
+  crv: number;
+  x: string;
+  y: string;
+  extracted: boolean;
+  [key: string]: any;
+}
+
 export interface PasskeyCredential {
   id: string;
-  publicKey: string;
+  publicKey: PasskeyP256PublicKey | string; // Union type for backward compatibility
   userId: string;
   createdAt: Date;
   lastUsed?: Date;
