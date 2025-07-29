@@ -64,7 +64,7 @@ function PasskeyDemo() {
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
-      <h1>React Passkey Library Demo</h1>
+      <h1>React Passkey Pro - Live Demo</h1>
 
       <div className="demo-card status-card">
         <h2>Status</h2>
