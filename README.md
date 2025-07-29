@@ -13,7 +13,7 @@
 
 **Try it now:** **[https://esmat-nawahda.github.io/react-passkey/](https://esmat-nawahda.github.io/react-passkey/)**
 
-> ✅ **Real WebAuthn Demo** - This demo uses authentic WebAuthn APIs with real biometric authentication. Check the browser console and on-screen display for genuine credential data from your device.
+> ✅ **Real WebAuthn Demo** - This demo uses authentic WebAuthn APIs with real biometric authentication. Check the browser console and on-screen display for genuine P-256 elliptic curve coordinates from your device.
 
 ## ✨ Why React Passkey Pro?
 
@@ -65,6 +65,32 @@ pnpm add react-passkey-pro
 
 # bun
 bun add react-passkey-pro
+```
+
+## 🎯 Clean P-256 Coordinate API
+
+React Passkey Pro v2.0+ provides direct access to P-256 elliptic curve coordinates:
+
+```tsx
+// Clean, user-friendly structure - no confusing nesting!
+const credential = {
+  id: "credential_id_here",
+  publicKey: {
+    kty: 2,           // EC2 key type
+    alg: -7,          // ES256 algorithm  
+    crv: 1,           // P-256 curve
+    x: "base64_x_coordinate",  // Real X coordinate
+    y: "base64_y_coordinate",  // Real Y coordinate
+    extracted: true   // Successfully extracted from WebAuthn
+  },
+  userId: "user@example.com",
+  createdAt: new Date(),
+  transports: ["internal", "hybrid"]
+}
+
+// Access coordinates directly:
+console.log(credential.publicKey.x); // X coordinate
+console.log(credential.publicKey.y); // Y coordinate
 ```
 
 ## ⚡ Quick Start

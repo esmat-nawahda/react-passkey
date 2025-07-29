@@ -261,7 +261,15 @@ const extractP256Coordinates = (authData: ArrayBuffer): { x: string; y: string }
   }
 };
 
-export const extractPublicKeyFromCredential = (credential: PublicKeyCredential): any => {
+// Extract P-256 coordinates directly for clean API
+export const extractPublicKeyFromCredential = (credential: PublicKeyCredential): { 
+  kty: number; 
+  alg: number; 
+  crv: number; 
+  x: string; 
+  y: string; 
+  extracted: boolean; 
+} => {
   if (!('response' in credential) || !('attestationObject' in credential.response)) {
     throw new Error('Invalid credential format');
   }
@@ -271,11 +279,7 @@ export const extractPublicKeyFromCredential = (credential: PublicKeyCredential):
   try {
     // Real WebAuthn credential data extraction
     const attestationObject = response.attestationObject;
-    const clientDataJSON = response.clientDataJSON;
     const authenticatorData = response.getAuthenticatorData?.() || null;
-    
-    // Parse client data JSON to get challenge and origin
-    const clientData = JSON.parse(new TextDecoder().decode(clientDataJSON));
     
     // Extract P-256 coordinates from authenticator data
     console.log('🎯 Starting P-256 coordinate extraction process...');
@@ -306,81 +310,37 @@ export const extractPublicKeyFromCredential = (credential: PublicKeyCredential):
     
     console.log('🏁 P-256 extraction result:', p256Coordinates ? '✅ Success' : '❌ Failed');
     
-    // Extract real credential information
-    const credentialData = {
-      // Core credential information
-      credentialId: bufferToBase64(credential.rawId),
-      type: credential.type,
-      
-      // Real WebAuthn response data
-      attestationObject: bufferToBase64(attestationObject),
-      clientDataJSON: bufferToBase64(clientDataJSON),
-      authenticatorData: authenticatorData ? bufferToBase64(authenticatorData) : null,
-      
-      // Client data details
-      clientData: {
-        type: clientData.type,
-        challenge: clientData.challenge,
-        origin: clientData.origin,
-        crossOrigin: clientData.crossOrigin || false,
-      },
-      
-      // P-256 elliptic curve coordinates (extracted from CBOR)
-      publicKey: p256Coordinates ? {
-        kty: 2, // EC2 key type
-        alg: -7, // ES256 algorithm
-        crv: 1, // P-256 curve
-        x: p256Coordinates.x, // Real X coordinate
-        y: p256Coordinates.y, // Real Y coordinate
-        extracted: true, // Flag indicating successful extraction
-      } : {
-        kty: 2,
-        alg: -7,
-        crv: 1,
-        x: 'CBOR_PARSE_REQUIRED', // Indicates CBOR parsing needed
-        y: 'CBOR_PARSE_REQUIRED',
-        extracted: false,
-        note: 'Use a full CBOR library for production P-256 coordinate extraction'
-      },
-      
-      // Transport methods supported by authenticator
-      transports: response.getTransports?.() || [],
-      
-      // Timestamp
-      timestamp: Date.now(),
-      
-      // Algorithm metadata
-      algorithm: -7, // ES256 algorithm identifier
-      
-      // Note about implementation
-      note: p256Coordinates 
-        ? 'Real WebAuthn credential with extracted P-256 coordinates'
-        : 'Real WebAuthn credential - simplified CBOR parser, use production CBOR library for full parsing',
+    // Return clean P-256 coordinate structure (no nesting!)
+    const publicKey = p256Coordinates ? {
+      kty: 2, // EC2 key type
+      alg: -7, // ES256 algorithm
+      crv: 1, // P-256 curve
+      x: p256Coordinates.x, // Real X coordinate
+      y: p256Coordinates.y, // Real Y coordinate
+      extracted: true, // Flag indicating successful extraction
+    } : {
+      kty: 2,
+      alg: -7,
+      crv: 1,
+      x: 'CBOR_PARSE_REQUIRED', // Indicates CBOR parsing needed
+      y: 'CBOR_PARSE_REQUIRED',
+      extracted: false,
     };
     
-    console.log('Real WebAuthn credential with P-256 extraction:', credentialData);
-    return credentialData;
+    console.log('🎉 Clean P-256 public key structure:', publicKey);
+    return publicKey;
     
   } catch (error) {
-    console.error('Error extracting credential data:', error);
+    console.error('❌ Error extracting P-256 coordinates:', error);
     
     // Fallback with clear indication this is fallback data
     return {
-      credentialId: bufferToBase64(credential.rawId),
-      type: credential.type,
-      algorithm: -7,
-      publicKey: {
-        kty: 2,
-        alg: -7,
-        crv: 1,
-        x: 'ERROR_EXTRACTING',
-        y: 'ERROR_EXTRACTING',
-        extracted: false,
-      },
-      error: 'Could not parse credential data',
-      fallback: true,
-      timestamp: Date.now(),
-      note: 'This is fallback data due to parsing error'
+      kty: 2,
+      alg: -7,
+      crv: 1,
+      x: 'ERROR_EXTRACTING',
+      y: 'ERROR_EXTRACTING',
+      extracted: false,
     };
   }
 };

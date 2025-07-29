@@ -1,6 +1,6 @@
 {
   "name": "react-passkey-pro",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "🔐 The most comprehensive React library for WebAuthn passkey authentication. Drop-in components, TypeScript support, and zero dependencies. Secure, fast, and developer-friendly.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

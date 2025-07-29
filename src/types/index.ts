@@ -5,18 +5,17 @@ export interface PasskeyUser {
 }
 
 export interface PasskeyP256PublicKey {
-  kty: number;
-  alg: number;
-  crv: number;
-  x: string;
-  y: string;
-  extracted: boolean;
-  [key: string]: any;
+  kty: number;        // 2 for EC2
+  alg: number;        // -7 for ES256  
+  crv: number;        // 1 for P-256
+  x: string;          // base64 encoded x coordinate
+  y: string;          // base64 encoded y coordinate
+  extracted: boolean; // true if successfully extracted from WebAuthn
 }
 
 export interface PasskeyCredential {
   id: string;
-  publicKey: PasskeyP256PublicKey | string; // Union type for backward compatibility
+  publicKey: PasskeyP256PublicKey; // Direct P-256 coordinates, no nesting
   userId: string;
   createdAt: Date;
   lastUsed?: Date;
