@@ -1,6 +1,6 @@
 {
-  "name": "@esmatnawahda/react-passkey",
-  "version": "0.1.0",
+  "name": "react-passkey-pro",
+  "version": "1.1.0",
   "description": "A comprehensive React library for WebAuthn passkey authentication with TypeScript support",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -34,7 +34,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/esmatnawahda/react-passkey.git"
+    "url": "git+https://github.com/esmatnawahda/react-passkey.git"
   },
   "homepage": "https://esmatnawahda.github.io/react-passkey/",
   "bugs": {

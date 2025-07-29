@@ -22,15 +22,15 @@ Check out the live demo: **[https://esmatnawahda.github.io/react-passkey/](https
 ## Installation
 
 ```bash
-npm install @esmatnawahda/react-passkey
+npm install react-passkey-pro
 # or
-yarn add @esmatnawahda/react-passkey
+yarn add react-passkey-pro
 ```
 
 ## Quick Start
 
 ```tsx
-import { PasskeyProvider, PasskeyButton, usePasskey } from '@esmatnawahda/react-passkey';
+import { PasskeyProvider, PasskeyButton, usePasskey } from 'react-passkey-pro';
 
 function App() {
   return (

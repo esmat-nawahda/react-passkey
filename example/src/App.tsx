@@ -5,8 +5,8 @@ import {
   PasskeyButton,
   PasskeyManager,
   PasskeyStatus,
-} from '@esmatnawahda/react-passkey';
-import type { PasskeyCredential } from '@esmatnawahda/react-passkey';
+} from 'react-passkey-pro';
+import type { PasskeyCredential } from 'react-passkey-pro';
 import './App.css';
 
 function PasskeyDemo() {
@@ -223,7 +223,7 @@ function PasskeyDemo() {
           overflow: 'auto',
           fontSize: '0.9rem'
         }}>
-{`import { PasskeyProvider, PasskeyButton } from '@esmatnawahda/react-passkey';
+{`import { PasskeyProvider, PasskeyButton } from 'react-passkey-pro';
 
 function App() {
   const handleSuccess = (result) => {
